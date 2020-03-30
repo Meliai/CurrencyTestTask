@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">@color/white</color>
+    <color name="colorPrimaryDark">@color/grey</color>
+    <color name="colorAccent">@color/black</color>
+
+    <!--Color Palette-->
+    <color name="black">#000000</color>
+    <color name="white">#ffffff</color>
+    <color name="grey">#959595</color>
+
+    <color name="active_green">#53c43f</color>
+    <color name="active_green_opacity50">#9bd8ad</color>
+    <color name="leafy_green">#4aad39</color>
+    <color name="leafy_green_opacity40">#BAE8B2</color>
+
+    <color name="color_window_background">@color/white</color>
+    <color name="color_status_bar_light">@color/white</color>
+</resources>

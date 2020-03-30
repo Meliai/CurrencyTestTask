@@ -1,0 +1,53 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'kotlin-android-extensions'
+
+apply from: rootProject.file('android.gradle')
+
+androidExtensions {
+    experimental = true
+}
+
+dependencies {
+    def commonDependencies = rootProject.ext.commonDependencies
+
+    implementation project(':common')
+    api project(':domain')
+
+    implementation commonDependencies.libs
+    implementation commonDependencies.appCore
+    implementation commonDependencies.appCoreAdapterKtx
+
+    implementation commonDependencies.annotations
+    implementation commonDependencies.appCompat
+    implementation commonDependencies.recyclerView
+    implementation commonDependencies.vectorDrawable
+    implementation commonDependencies.constraint
+    implementation commonDependencies.multiDex
+    implementation commonDependencies.material
+
+    implementation commonDependencies.rxKotlin
+    implementation commonDependencies.rxAndroid
+    implementation commonDependencies.rxPm
+    implementation commonDependencies.rxBinding
+    implementation commonDependencies.rxBindingAppCompat
+    implementation commonDependencies.rxNetwork
+
+    implementation commonDependencies.javaxAnnotation
+    implementation commonDependencies.javaxInject
+
+    implementation commonDependencies.cicerone
+
+    // Dagger2
+    kapt commonDependencies.daggerCompiler
+    kapt commonDependencies.daggerAndroidProcessor
+    implementation commonDependencies.dagger
+    implementation commonDependencies.daggerAndroid
+    implementation commonDependencies.daggerAndroidSupport
+
+    implementation commonDependencies.glide
+    kapt commonDependencies.glideProcessor
+
+    implementation commonDependencies.material
+}

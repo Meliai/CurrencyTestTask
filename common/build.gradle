@@ -1,0 +1,14 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply from: rootProject.file('android.gradle')
+
+dependencies {
+    def commonDependencies = rootProject.ext.commonDependencies
+
+    implementation commonDependencies.appCoreInteractor
+
+    implementation commonDependencies.rxKotlin
+
+    implementation commonDependencies.javaxAnnotation
+    implementation commonDependencies.javaxInject
+}

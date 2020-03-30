@@ -1,0 +1,36 @@
+android {
+
+    def androidConfigurationVersion = rootProject.ext.androidVersions
+
+    compileSdkVersion androidConfigurationVersion.androidCompileSdkVersion
+    buildToolsVersion androidConfigurationVersion.androidBuildToolsVersion
+
+    defaultConfig {
+        minSdkVersion androidConfigurationVersion.androidMinSdkVersion
+        targetSdkVersion androidConfigurationVersion.androidTargetSdkVersion
+    }
+
+    dexOptions {
+        preDexLibraries = false
+        dexInProcess = false
+        javaMaxHeapSize "4g"
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    lintOptions {
+        quiet true
+        abortOnError false
+        ignoreWarnings true
+        disable 'InvalidPackage'
+        disable 'OldTargetApi'
+    }
+    testOptions {
+        unitTests.all {
+            jvmArgs '-noverify'
+        }
+    }
+}

@@ -1,0 +1,24 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+apply from: rootProject.file('android.gradle')
+
+dependencies {
+    def commonDependencies = rootProject.ext.commonDependencies
+
+    implementation project(':common')
+
+    implementation commonDependencies.appCoreInteractor
+
+    implementation commonDependencies.rxKotlin
+
+    implementation commonDependencies.javaxAnnotation
+    implementation commonDependencies.javaxInject
+
+    // Dagger2
+    kapt commonDependencies.daggerCompiler
+    kapt commonDependencies.daggerAndroidProcessor
+    implementation commonDependencies.dagger
+    implementation commonDependencies.daggerAndroid
+    implementation commonDependencies.daggerAndroidSupport
+}
