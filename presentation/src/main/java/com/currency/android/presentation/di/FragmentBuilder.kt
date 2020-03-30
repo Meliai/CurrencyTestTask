@@ -6,10 +6,9 @@ import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
 @Module
-@Suppress("UnnecessaryAbstractClass", "TooManyFunctions")
 abstract class FragmentBuilder {
 
     @FragmentScope
     @ContributesAndroidInjector
-    abstract fun bindOnBoardingFragment(): CurrencyListFragment
+    abstract fun bindCurrencyListFragment(): CurrencyListFragment
 }

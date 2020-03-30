@@ -6,7 +6,7 @@ import ru.terrakok.cicerone.android.support.SupportAppScreen
 
 object Screens {
 
-    object OnBoardingFlow : SupportAppScreen() {
+    object CurrencyListFlow : SupportAppScreen() {
         override fun getFragment(): Fragment = CurrencyListFragment.newInstance()
     }
 }
