@@ -8,11 +8,11 @@ import javax.inject.Inject
 class CurrencyDataDtoMapper @Inject constructor() : Mapper<CurrencyDataDto, @JvmSuppressWildcards List<CurrencyModel>> {
     override fun mapFromObject(source: CurrencyDataDto): List<CurrencyModel> =
         with(source) {
-            rates.map {
+            rates.map { (currency, rate) ->
                 CurrencyModel(
-                    currency = it.key,
-                    value = it.value,
-                    isDefault = defaultCurrency == it.key
+                    currency = currency,
+                    value = rate,
+                    isDefault = currency == defaultCurrency
                 )
             }
         }
