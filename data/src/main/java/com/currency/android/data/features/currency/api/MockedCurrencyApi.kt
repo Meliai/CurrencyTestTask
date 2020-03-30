@@ -7,7 +7,7 @@ import io.reactivex.Single
 class MockedCurrencyApi : CurrencyApi {
     override fun getLatestCurrencyData(baseCurrency: String): Single<CurrencyDataDto> =
         Single.just(CurrencyDataDto(
-            baseCurrency = "EUR",
+            defaultCurrency = "EUR",
             rates = hashMapOf(
                 "CHF" to 1.152,
                 "BRL" to 4.251,

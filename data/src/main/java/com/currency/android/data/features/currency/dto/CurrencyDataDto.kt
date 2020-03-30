@@ -1,6 +1,8 @@
 package com.currency.android.data.features.currency.dto
 
+import com.google.gson.annotations.SerializedName
+
 data class CurrencyDataDto(
-    val baseCurrency: String,
-    val rates: HashMap<String, Double>
+    @SerializedName("baseCurrency") val defaultCurrency: String,
+    @SerializedName("rates") val rates: HashMap<String, Double>
 )
