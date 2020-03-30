@@ -1,6 +1,7 @@
 package com.currency.android.data.di
 
-import com.currency.android.data.features.feature1.api.TestApi
+import com.currency.android.data.features.currency.api.CurrencyApi
+import com.currency.android.data.features.currency.api.MockedCurrencyApi
 import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit
@@ -11,9 +12,13 @@ class ApiModule {
 
     @Provides
     @Singleton
-    fun provideApi(retrofit: Retrofit): TestApi = retrofit.create<TestApi>(TestApi::class.java)
+    fun provideCurrencyApi(retrofit: Retrofit): CurrencyApi =
+        when (ApiConfig.USE_MOCKED_CURRENCY_API) {
+            true -> MockedCurrencyApi()
+            else -> retrofit.create<CurrencyApi>(CurrencyApi::class.java)
+        }
 
     object ApiConfig {
-        const val USE_MOCKED_AUTO_LOGIN_API = false
+        const val USE_MOCKED_CURRENCY_API = false
     }
 }

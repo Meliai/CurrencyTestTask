@@ -1,7 +1,7 @@
 package com.currency.android.data.di
 
-import com.currency.android.data.features.feature1.datasource.TestDataSource
-import com.currency.android.data.features.feature1.datasource.TestRemoteDataSource
+import com.currency.android.data.features.currency.datasource.CurrencyDataSource
+import com.currency.android.data.features.currency.datasource.CurrencyRemoteDataSource
 import dagger.Binds
 import dagger.Module
 import javax.inject.Singleton
@@ -12,5 +12,5 @@ interface DataSourceModule {
 
     @Binds
     @Singleton
-    fun bindTestDataSource(source: TestRemoteDataSource): TestDataSource
+    fun bindTestDataSource(source: CurrencyRemoteDataSource): CurrencyDataSource
 }

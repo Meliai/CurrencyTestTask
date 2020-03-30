@@ -1,7 +1,7 @@
-package com.currency.android.data.features.feature1.mapper
+package com.currency.android.data.features.currency.mapper
 
 import com.currency.common.mapper.Mapper
-import com.currency.android.data.features.feature1.dto.TestDto
+import com.currency.android.data.features.currency.dto.TestDto
 import com.currency.android.domain.features.feature1.model.TestModel
 import javax.inject.Inject
 
