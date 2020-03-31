@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="toolbar_height">56dp</dimen>
+
+    <!--FontSize-->
+    <dimen name="font_size_title">20sp</dimen>
+    <dimen name="font_size_currency_code">16sp</dimen>
+    <dimen name="font_size_currency_name">14sp</dimen>
+    <dimen name="font_size_rate">20sp</dimen>
+
+</resources>

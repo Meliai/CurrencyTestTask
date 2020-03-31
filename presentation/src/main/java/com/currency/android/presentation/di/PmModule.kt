@@ -24,5 +24,5 @@ interface PmModule {
     @Binds
     @IntoMap
     @PmKey(CurrencyListPm::class)
-    fun bindOnBoardingPm(pm: CurrencyListPm): PresentationModel
+    fun bindCurrencyListPm(pm: CurrencyListPm): PresentationModel
 }

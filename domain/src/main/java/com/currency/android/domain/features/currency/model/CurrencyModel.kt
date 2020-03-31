@@ -2,6 +2,7 @@ package com.currency.android.domain.features.currency.model
 
 data class CurrencyModel(
     val currency: String,
-    val value: Double,
-    val isDefault: Boolean
+    val rate: Double,
+    val isDefault: Boolean,
+    val multiplier: Double = 100.0
 )

@@ -8,8 +8,10 @@ import dagger.Binds
 import dagger.Module
 
 @Module
-interface MappersModule {
+interface DataMappersModule {
 
     @Binds
-    fun bindCurrencyDataDtoMapper(mapper: CurrencyDataDtoMapper): Mapper<CurrencyDataDto, List<CurrencyModel>>
+    fun bindCurrencyDataDtoMapper(
+        mapper: CurrencyDataDtoMapper
+    ): Mapper<CurrencyDataDto, List<CurrencyModel>>
 }

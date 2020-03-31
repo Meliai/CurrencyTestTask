@@ -5,13 +5,14 @@ import com.currency.android.data.di.ApiConstantsModule
 import com.currency.android.data.di.ApiModule
 import com.currency.android.data.di.DataSourceModule
 import com.currency.android.data.di.InterceptorModule
-import com.currency.android.data.di.MappersModule
+import com.currency.android.data.di.DataMappersModule
 import com.currency.android.data.di.NetworkModule
 import com.currency.android.data.di.RepoModule
 import com.currency.android.presentation.di.ActivityBuilder
 import com.currency.android.presentation.di.FragmentBuilder
 import com.currency.android.presentation.di.NavigationModule
 import com.currency.android.presentation.di.PmModule
+import com.currency.android.presentation.di.PresentationMappersModule
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.support.AndroidSupportInjectionModule
@@ -27,13 +28,14 @@ import javax.inject.Singleton
     ApiConstantsModule::class,
     NetworkModule::class,
     DataSourceModule::class,
-    MappersModule::class,
+    DataMappersModule::class,
     // domain
     RepoModule::class,
     // presentation
     PmModule::class,
     ActivityBuilder::class,
     FragmentBuilder::class,
+    PresentationMappersModule::class,
     // navigation
     NavigationModule::class
 ])

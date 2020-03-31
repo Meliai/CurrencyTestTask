@@ -4,13 +4,6 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="bottomSheetDialogTheme">@style/BottomSheetTransparentStyle</item>
-    </style>
-
-    <style name="BottomSheetTransparentStyle" parent="Theme.Design.BottomSheetDialog">
-        <item name="android:windowAnimationStyle">@null</item>
-        <item name="android:colorBackground">@android:color/transparent</item>
-        <item name="android:backgroundDimEnabled">false</item>
     </style>
 
     <style name="AppProgressBar" parent="Base.Widget.AppCompat.ProgressBar">
@@ -24,6 +17,27 @@
         <item name="android:windowBackground">@drawable/bg_splash</item>
     </style>
 
-    <style name="TooltipStyle"></style>
+    <style name="TypographyToolbarTitle">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">@dimen/font_size_title</item>
+    </style>
+
+    <style name="TypographyCurrencyCode">
+        <item name="android:letterSpacing">-0.02</item>
+        <item name="android:textColor">#191C1F</item>
+        <item name="android:textSize">@dimen/font_size_currency_code</item>
+    </style>
+
+    <style name="TypographyCurrencyName">
+        <item name="android:letterSpacing">-0.01</item>
+        <item name="android:textColor">#8B959E</item>
+        <item name="android:textSize">@dimen/font_size_currency_name</item>
+    </style>
+
+    <style name="TypographyRate">
+        <item name="android:letterSpacing">0.02</item>
+        <item name="android:textColor">#191C1F</item>
+        <item name="android:textSize">@dimen/font_size_rate</item>
+    </style>
 
 </resources>

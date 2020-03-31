@@ -29,6 +29,7 @@ object RetrofitFactory {
                     builder.callbackExecutor(executor)
                 }
             }
+
             .build()
     }
 }

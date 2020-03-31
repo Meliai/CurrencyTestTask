@@ -47,7 +47,9 @@
         android:layout_marginTop="32dp"
         android:layout_marginEnd="80dp"
         android:background="@drawable/selector_green_gray_button_rounded"
+        android:gravity="center"
         android:minWidth="200dp"
+        android:padding="16dp"
         android:text="Some long button text" />
 
 </LinearLayout>
