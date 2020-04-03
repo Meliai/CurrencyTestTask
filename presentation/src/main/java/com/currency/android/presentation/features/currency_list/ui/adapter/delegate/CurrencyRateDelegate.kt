@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.currency.android.presentation.Events
 import com.currency.android.presentation.R
 import com.currency.android.presentation.core.bus.event
+import com.currency.android.presentation.features.currency_list.chooseDrawable
 import com.currency.android.presentation.features.currency_list.ui.adapter.item.CurrencyRateListItem
 import com.currency.android.presentation.utils.loadImage
 import com.currency.android.presentation.utils.withAdapterPosition
@@ -57,7 +58,7 @@ class CurrencyRateDelegate(
 
         with(holder as ViewHolder) {
             currencyImageView.loadImage(
-                R.drawable.ic_cad_flag,
+                item.currency.chooseDrawable(),
                 R.drawable.ic_no_photo_gray_small,
                 R.drawable.ic_no_photo_gray_small
             )
@@ -73,9 +74,8 @@ class CurrencyRateDelegate(
         with(holder as ViewHolder) {
             when (payload) {
                 CurrencyRateListItem.Payload.RATE_CHANGED,
-                CurrencyRateListItem.Payload.MULTIPLIER_CHANGED -> {
+                CurrencyRateListItem.Payload.MULTIPLIER_CHANGED ->
                     currencyRateText.updateRateTextView(item.rate, item.multiplier, item.isSelected)
-                }
                 CurrencyRateListItem.Payload.SELECTION_CHANGED -> {
                 }
             }

@@ -1,11 +1,8 @@
 package com.currency.android.presentation.utils
 
 import android.graphics.drawable.Drawable
-import android.view.View
-import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.annotation.DrawableRes
-import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
@@ -31,7 +28,7 @@ inline fun <reified T : ListItem> RecyclerView.ViewHolder.withAdapterPosition(
 }
 
 fun ImageView.loadImage(
-    @DrawableRes icon: Int,
+    @DrawableRes icon: Int?,
     @DrawableRes loadingPlaceholder: Int,
     @DrawableRes errorPlaceholder: Int,
     onSuccess: (() -> Unit)? = null,
