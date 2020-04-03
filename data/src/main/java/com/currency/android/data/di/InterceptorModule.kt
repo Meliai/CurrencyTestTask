@@ -16,8 +16,7 @@ class InterceptorModule(
 
     @Provides
     @Singleton
-    fun httpLoggingInterceptor(logger: HttpLoggingInterceptor.Logger): HttpLoggingInterceptor =
-        HttpLoggingInterceptor(logger).setLevel(level)
+    fun httpLoggingInterceptor(): HttpLoggingInterceptor = HttpLoggingInterceptor().setLevel(level)
 
     @Provides
     @Singleton

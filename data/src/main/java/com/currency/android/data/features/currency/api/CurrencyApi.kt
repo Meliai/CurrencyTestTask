@@ -7,7 +7,7 @@ import retrofit2.http.Query
 
 interface CurrencyApi {
 
-    @GET("/latest")
+    @GET("api/android/latest")
     fun getLatestCurrencyData(
         @Query("base") baseCurrency: String
     ): Single<CurrencyDataDto>

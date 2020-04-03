@@ -51,6 +51,7 @@ def libraryVersions = [
         glideVersion              : '4.9.0',
         ciceroneVersion           : '5.0.0',
         ktlintVersion             : "0.24.0",
+        findbugsVersion           : "jsr305:3.0.2",
         kotlin_version            : ext.kotlin_version
 ]
 
@@ -103,6 +104,7 @@ ext.commonDependencies = [
         glideProcessor        : "com.github.bumptech.glide:compiler:${libraryVersions.glideVersion}",
 
         ktlint                : "com.github.shyiko:ktlint:${libraryVersions.ktlintVersion}",
+        findbugs              : "com.google.code.findbugs:${libraryVersions.findbugsVersion}",
 
         // navigation
         cicerone              : "ru.terrakok.cicerone:cicerone:${libraryVersions.ciceroneVersion}",

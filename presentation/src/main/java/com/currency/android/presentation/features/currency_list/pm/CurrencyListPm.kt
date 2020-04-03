@@ -4,11 +4,9 @@ import com.currency.android.domain.features.currency.interactor.GetLatestCurrenc
 import com.currency.android.domain.features.currency.model.CurrencyModel
 import com.currency.android.presentation.core.pm.BaseListPm
 import com.currency.android.presentation.core.pm.ServiceFacade
-import com.currency.android.presentation.features.currency_list.mapper.CurrencyRateListBuilder
 import com.currency.common.mapper.Mapper
 import com.nullgr.core.adapter.items.ListItem
 import me.dmdev.rxpm.action
-import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class CurrencyListPm @Inject constructor(
@@ -35,7 +33,7 @@ class CurrencyListPm @Inject constructor(
     }
 
     private fun uploadData() =
-        getLatestCurrencyDataUseCase.execute()
+        getLatestCurrencyDataUseCase.execute(GetLatestCurrencyDataUseCase.Params("EUR"))
             .doOnSuccess {
                 items.consumer.accept(mapper.mapFromObjects(it))
             }

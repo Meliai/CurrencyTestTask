@@ -16,7 +16,7 @@ class ApiConstantsModule(private val isDebugMode: Boolean) {
     }
 
     private companion object {
-        const val SERVER_URL_PROD = "https://hiring.revolut.codes/api/android"
-        const val SERVER_URL_TEST = "https://hiring.revolut.codes/api/android"
+        const val SERVER_URL_PROD = "https://hiring.revolut.codes/"
+        const val SERVER_URL_TEST = "https://hiring.revolut.codes/"
     }
 }

@@ -163,4 +163,5 @@ dependencies {
     implementation commonDependencies.gson
 
     implementation commonDependencies.material
+    implementation commonDependencies.findbugs
 }
