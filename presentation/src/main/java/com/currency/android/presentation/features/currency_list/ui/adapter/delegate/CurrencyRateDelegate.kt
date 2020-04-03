@@ -2,16 +2,19 @@ package com.currency.android.presentation.features.currency_list.ui.adapter.dele
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.currency.android.presentation.Events
 import com.currency.android.presentation.R
+import com.currency.android.presentation.core.bus.event
 import com.currency.android.presentation.features.currency_list.ui.adapter.item.CurrencyRateListItem
 import com.currency.android.presentation.utils.loadImage
-import com.currency.android.presentation.utils.withAdapterPosition
 import com.nullgr.core.adapter.items.ListItem
 import com.nullgr.core.adapter.ktx.AdapterDelegate
 import com.nullgr.core.adapter.ktx.ViewHolder
 import com.nullgr.core.resources.ResourceProvider
 import com.nullgr.core.rx.RxBus
+import com.nullgr.core.ui.extensions.addTextChangedListener
 import kotlinx.android.synthetic.main.item_currency_rate.*
+import kotlinx.android.synthetic.main.item_currency_rate.view.*
 import java.util.Currency
 
 class CurrencyRateDelegate(
@@ -24,11 +27,16 @@ class CurrencyRateDelegate(
     override fun onCreateViewHolder(parent: ViewGroup): RecyclerView.ViewHolder {
         return super.onCreateViewHolder(parent).apply {
             with(this as ViewHolder) {
-                itemView.setOnClickListener {
-                    withAdapterPosition<CurrencyRateListItem> { _, _, _ ->
-                        //                        bus.click(Clicks.ProductCardClicked(item.articul))
+                //                itemView.setOnClickListener {
+//                    withAdapterPosition<CurrencyRateListItem> { _, _, _ ->
+//                        bus.
+//                    }
+//                }
+                itemView.currencyRateText.addTextChangedListener(
+                    onTextChanged = { text, _, _, _ ->
+                        bus.event(Events.OnMultiplierChanged(text.toString().trim()))
                     }
-                }
+                )
             }
         }
     }
@@ -44,7 +52,7 @@ class CurrencyRateDelegate(
             )
 
             currencyCodeTextView.text = item.currency
-            currencyNameTextView.text = Currency.getInstance(item.currency).displayName
+            currencyNameTextView.text = Currency.getInstance(item.currency).displayName.capitalize()
             currencyRateText.setText(convertRate(item.rate, item.multiplier))
         }
     }
@@ -64,5 +72,9 @@ class CurrencyRateDelegate(
     }
 
     private fun convertRate(rate: Double, multiplier: Double): String =
-        (rate * multiplier).toString()
+        String.format(RATE_FORMAT, (rate * multiplier)).trim()
+
+    private companion object {
+        const val RATE_FORMAT = "%.2f"
+    }
 }

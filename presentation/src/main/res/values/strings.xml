@@ -3,4 +3,5 @@
 
     <!--    Rates Screen-->
     <string name="rates_screen_title">Rates</string>
+    <string name="hint_rate">0</string>
 </resources>

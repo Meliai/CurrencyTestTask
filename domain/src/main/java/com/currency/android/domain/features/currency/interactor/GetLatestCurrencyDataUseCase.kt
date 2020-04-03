@@ -14,8 +14,8 @@ class GetLatestCurrencyDataUseCase @Inject constructor(
 
     override fun buildUseCaseObservable(params: Params?): Single<List<CurrencyModel>> {
         val p = checkNotNull(params)
-        return repository.getLatestCurrencyData(p.default)
+        return repository.getLatestCurrencyData(p.baseCurrency)
     }
 
-    data class Params(val default: String)
+    data class Params(val baseCurrency: String)
 }

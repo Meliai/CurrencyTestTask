@@ -11,8 +11,7 @@ class CurrencyDataDtoMapper @Inject constructor() : Mapper<CurrencyDataDto, @Jvm
             rates.map { (currency, rate) ->
                 CurrencyModel(
                     currency = currency,
-                    rate = rate,
-                    isDefault = currency == defaultCurrency
+                    rate = rate
                 )
             }
         }

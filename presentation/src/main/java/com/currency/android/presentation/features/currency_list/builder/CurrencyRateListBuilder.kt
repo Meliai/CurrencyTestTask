@@ -1,4 +1,4 @@
-package com.currency.android.presentation.features.currency_list.mapper
+package com.currency.android.presentation.features.currency_list.builder
 
 import com.currency.android.domain.features.currency.model.CurrencyModel
 import com.currency.android.presentation.features.currency_list.ui.adapter.item.CurrencyRateListItem

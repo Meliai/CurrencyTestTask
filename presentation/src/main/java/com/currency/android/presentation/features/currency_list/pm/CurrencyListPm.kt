@@ -16,6 +16,7 @@ class CurrencyListPm @Inject constructor(
 ) : BaseListPm(services) {
 
     private val loadScreenAction = action<Unit>()
+    private var currentList: MutableList<CurrencyModel> = ArrayList<CurrencyModel>()
 
     override fun onCreate() {
         super.onCreate()
@@ -33,9 +34,21 @@ class CurrencyListPm @Inject constructor(
     }
 
     private fun uploadData() =
-        getLatestCurrencyDataUseCase.execute(GetLatestCurrencyDataUseCase.Params("EUR"))
+        getLatestCurrencyDataUseCase.execute(GetLatestCurrencyDataUseCase.Params(DEFAULT_CURRENCY))
             .doOnSuccess {
-                items.consumer.accept(mapper.mapFromObjects(it))
+                currentList.add(
+                    CurrencyModel(
+                        DEFAULT_CURRENCY,
+                        DEFAULT_RATE,
+                        true
+                    ))
+                currentList.addAll(it)
+                items.consumer.accept(mapper.mapFromObjects(currentList))
             }
             .hideErrorContainer()
+
+    private companion object {
+        const val DEFAULT_CURRENCY = "EUR"
+        const val DEFAULT_RATE = 1.0
+    }
 }

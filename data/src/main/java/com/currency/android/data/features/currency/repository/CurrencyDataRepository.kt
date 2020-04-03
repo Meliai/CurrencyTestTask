@@ -13,6 +13,6 @@ class CurrencyDataRepository @Inject constructor(
     private val mapper: Mapper<CurrencyDataDto, List<CurrencyModel>>
 ) : CurrencyRepository {
 
-    override fun getLatestCurrencyData(defaultCurrency: String): Single<List<CurrencyModel>> =
-        source.getCurrencyData(defaultCurrency).map(mapper::mapFromObject)
+    override fun getLatestCurrencyData(baseCurrency: String): Single<List<CurrencyModel>> =
+        source.getCurrencyData(baseCurrency).map(mapper::mapFromObject)
 }

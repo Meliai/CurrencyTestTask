@@ -5,5 +5,5 @@ import io.reactivex.Single
 
 interface CurrencyRepository {
 
-    fun getLatestCurrencyData(defaultCurrency: String): Single<List<CurrencyModel>>
+    fun getLatestCurrencyData(baseCurrency: String): Single<List<CurrencyModel>>
 }
