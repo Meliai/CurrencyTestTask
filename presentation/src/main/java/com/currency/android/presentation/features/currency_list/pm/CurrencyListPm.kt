@@ -2,6 +2,8 @@ package com.currency.android.presentation.features.currency_list.pm
 
 import com.currency.android.domain.features.currency.interactor.GetLatestCurrencyDataUseCase
 import com.currency.android.domain.features.currency.model.CurrencyModel
+import com.currency.android.presentation.Events
+import com.currency.android.presentation.core.bus.events
 import com.currency.android.presentation.core.pm.BaseListPm
 import com.currency.android.presentation.core.pm.ServiceFacade
 import com.currency.common.mapper.Mapper
@@ -16,7 +18,7 @@ class CurrencyListPm @Inject constructor(
 ) : BaseListPm(services) {
 
     private val loadScreenAction = action<Unit>()
-    private var currentList: MutableList<CurrencyModel> = ArrayList<CurrencyModel>()
+    private var currentList: MutableList<CurrencyModel> = ArrayList()
 
     override fun onCreate() {
         super.onCreate()
@@ -31,6 +33,19 @@ class CurrencyListPm @Inject constructor(
             .doOnNext { loadScreenAction.consumer.accept(Unit) }
             .subscribe()
             .untilDestroy()
+    }
+
+    override fun onBind() {
+        super.onBind()
+        bus.events<Events.OnMultiplierChanged>()
+            .doOnNext { event ->
+                currentList.map {
+                    it.multiplier = event.amount
+                }
+                items.consumer.accept(mapper.mapFromObjects(currentList))
+            }
+            .subscribe()
+            .untilUnbind()
     }
 
     private fun uploadData() =

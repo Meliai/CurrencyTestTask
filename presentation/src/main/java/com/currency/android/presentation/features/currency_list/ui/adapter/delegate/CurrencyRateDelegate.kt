@@ -7,6 +7,8 @@ import com.currency.android.presentation.R
 import com.currency.android.presentation.core.bus.event
 import com.currency.android.presentation.features.currency_list.ui.adapter.item.CurrencyRateListItem
 import com.currency.android.presentation.utils.loadImage
+import com.currency.android.presentation.utils.withAdapterPosition
+import com.google.android.material.textfield.TextInputEditText
 import com.nullgr.core.adapter.items.ListItem
 import com.nullgr.core.adapter.ktx.AdapterDelegate
 import com.nullgr.core.adapter.ktx.ViewHolder
@@ -15,6 +17,7 @@ import com.nullgr.core.rx.RxBus
 import com.nullgr.core.ui.extensions.addTextChangedListener
 import kotlinx.android.synthetic.main.item_currency_rate.*
 import kotlinx.android.synthetic.main.item_currency_rate.view.*
+import java.text.DecimalFormat
 import java.util.Currency
 
 class CurrencyRateDelegate(
@@ -34,7 +37,15 @@ class CurrencyRateDelegate(
 //                }
                 itemView.currencyRateText.addTextChangedListener(
                     onTextChanged = { text, _, _, _ ->
-                        bus.event(Events.OnMultiplierChanged(text.toString().trim()))
+                        withAdapterPosition<CurrencyRateListItem> { _, item, _ ->
+                            if (item.isSelected) {
+                                val amount: Double = if (text.toString().isNotEmpty()) {
+                                    text.toString().toDouble()
+                                } else 0.0
+                                bus.event(Events.OnMultiplierChanged(amount))
+                            }
+
+                        }
                     }
                 )
             }
@@ -53,7 +64,7 @@ class CurrencyRateDelegate(
 
             currencyCodeTextView.text = item.currency
             currencyNameTextView.text = Currency.getInstance(item.currency).displayName.capitalize()
-            currencyRateText.setText(convertRate(item.rate, item.multiplier))
+            currencyRateText.updateRateTextView(item.rate, item.multiplier, item.isSelected)
         }
     }
 
@@ -61,20 +72,25 @@ class CurrencyRateDelegate(
         val item = items[position] as CurrencyRateListItem
         with(holder as ViewHolder) {
             when (payload) {
-                CurrencyRateListItem.Payload.RATE_CHANGED ->
-                    currencyRateText.setText(convertRate(item.rate, item.multiplier))
-                CurrencyRateListItem.Payload.MULTIPLIER_CHANGED ->
-                    currencyRateText.setText(convertRate(item.rate, item.multiplier))
+                CurrencyRateListItem.Payload.RATE_CHANGED,
+                CurrencyRateListItem.Payload.MULTIPLIER_CHANGED -> {
+                    currencyRateText.updateRateTextView(item.rate, item.multiplier, item.isSelected)
+                }
                 CurrencyRateListItem.Payload.SELECTION_CHANGED -> {
                 }
             }
         }
     }
 
-    private fun convertRate(rate: Double, multiplier: Double): String =
-        String.format(RATE_FORMAT, (rate * multiplier)).trim()
+    private fun convertRate(rate: Double, multiplier: Double) =
+        if (multiplier > 0) DecimalFormat(RATE_FORMAT).format(rate * multiplier) else ""
+
+    private fun TextInputEditText.updateRateTextView(rate: Double, multiplier: Double, isSelected: Boolean) {
+        setText(convertRate(rate, multiplier))
+        if (isSelected) setSelection(this.text?.length ?: 0)
+    }
 
     private companion object {
-        const val RATE_FORMAT = "%.2f"
+        const val RATE_FORMAT = "##.##"
     }
 }
