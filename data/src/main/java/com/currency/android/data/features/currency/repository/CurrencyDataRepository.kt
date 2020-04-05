@@ -5,7 +5,7 @@ import com.currency.android.data.features.currency.dto.CurrencyDataDto
 import com.currency.android.domain.features.currency.model.CurrencyModel
 import com.currency.android.domain.features.currency.repository.CurrencyRepository
 import com.currency.common.mapper.Mapper
-import io.reactivex.Single
+import io.reactivex.Observable
 import javax.inject.Inject
 
 class CurrencyDataRepository @Inject constructor(
@@ -13,6 +13,9 @@ class CurrencyDataRepository @Inject constructor(
     private val mapper: Mapper<CurrencyDataDto, List<CurrencyModel>>
 ) : CurrencyRepository {
 
-    override fun getLatestCurrencyData(baseCurrency: String): Single<List<CurrencyModel>> =
-        source.getCurrencyData(baseCurrency).map(mapper::mapFromObject)
+    override fun getLatestCurrencyData(baseCurrency: String): Observable<List<CurrencyModel>> =
+        source.getCurrencyData(baseCurrency).map {
+            it.rates[baseCurrency] = 10.0
+            mapper.mapFromObject(it)
+        }
 }

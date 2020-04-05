@@ -1,4 +1,4 @@
-package com.currency.android.presentation.core.ui.fragment
+package com.currency.android.presentation.core.pm
 
 import android.content.Context
 import android.os.Bundle

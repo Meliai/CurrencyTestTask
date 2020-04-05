@@ -9,7 +9,6 @@ import com.currency.android.presentation.core.pm.widgets.ErrorHandler
 import com.currency.android.presentation.core.pm.widgets.errorHandler
 import com.currency.android.presentation.core.pm.widgets.networkControl
 import com.currency.android.presentation.core.pm.widgets.stateControl
-import com.currency.android.presentation.core.ui.snack_bar_view.SnackBarData
 import com.currency.android.presentation.core.ui.state_view.StateData
 import com.nullgr.core.rx.bindProgress
 import io.reactivex.Completable
@@ -36,9 +35,7 @@ abstract class BasePm(
 
     val hideKeyBoardCommand = command<Unit>()
     val showKeyBoardCommand = command<Unit>()
-    val showSnackBarCommand = command<SnackBarData>(bufferSize = 1)
 
-    val retryAction = action<Unit>()
     val networkStateAction = action<Boolean>()
     val networkStateCommand = command<Boolean>(bufferSize = 1)
 
@@ -68,10 +65,6 @@ abstract class BasePm(
                 .subscribe()
                 .untilDestroy()
         }
-    }
-
-    internal fun showSnackBar(data: SnackBarData) {
-        showSnackBarCommand.consumer.accept(data)
     }
 
     internal fun setErrorStateData(data: StateData) {

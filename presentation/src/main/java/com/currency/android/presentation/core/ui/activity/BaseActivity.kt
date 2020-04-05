@@ -16,7 +16,6 @@ import com.currency.android.presentation.core.pm.factory.PmFactory
 import com.currency.android.presentation.core.pm.widgets.bindTo
 import com.currency.android.presentation.core.ui.fragment.BaseFragment
 import com.currency.android.presentation.core.ui.state_view.StateView
-import com.currency.android.presentation.core.ui.utils.showSnackBar
 import dagger.android.AndroidInjection
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
@@ -99,7 +98,6 @@ abstract class BaseActivity<T : BasePm> : PmActivity<T>(),
         emptyStateView?.let { stateView -> pm.emptyControl.bindTo(stateView) }
         progressView?.let { view -> pm.progressState.bindTo(view.visibility()) }
         homeButtonView?.let { view -> view.setOnClickListener { onBackPressed() } }
-        pm.showSnackBarCommand.bindTo(activityContentView.showSnackBar())
     }
 
     override fun providePresentationModel(): T {

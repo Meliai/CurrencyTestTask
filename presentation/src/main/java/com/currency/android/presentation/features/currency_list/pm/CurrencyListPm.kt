@@ -8,7 +8,9 @@ import com.currency.android.presentation.core.pm.BaseListPm
 import com.currency.android.presentation.core.pm.ServiceFacade
 import com.currency.common.mapper.Mapper
 import com.nullgr.core.adapter.items.ListItem
+import io.reactivex.android.schedulers.AndroidSchedulers
 import me.dmdev.rxpm.action
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class CurrencyListPm @Inject constructor(
@@ -24,8 +26,9 @@ class CurrencyListPm @Inject constructor(
         super.onCreate()
 
         loadScreenAction.observable
-            .flatMapSingle { uploadData() }
-            .retry()
+            .flatMap {
+                uploadData()
+            }
             .subscribe()
             .untilDestroy()
 
@@ -50,20 +53,21 @@ class CurrencyListPm @Inject constructor(
 
     private fun uploadData() =
         getLatestCurrencyDataUseCase.execute(GetLatestCurrencyDataUseCase.Params(DEFAULT_CURRENCY))
-            .doOnSuccess {
+            .doOnNext {
                 currentList.add(
                     CurrencyModel(
-                        DEFAULT_CURRENCY,
-                        DEFAULT_RATE,
-                        true
+                        currency = DEFAULT_CURRENCY,
+                        isDefault = true
                     ))
                 currentList.addAll(it)
                 items.consumer.accept(mapper.mapFromObjects(currentList))
             }
+            .observeOn(AndroidSchedulers.mainThread())
+            .repeatWhen { it.delay(FREQUENCY, TimeUnit.SECONDS) }
             .hideErrorContainer()
 
     private companion object {
         const val DEFAULT_CURRENCY = "EUR"
-        const val DEFAULT_RATE = 1.0
+        const val FREQUENCY = 1L
     }
 }

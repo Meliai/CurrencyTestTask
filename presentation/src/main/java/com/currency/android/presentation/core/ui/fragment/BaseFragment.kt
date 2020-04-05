@@ -11,11 +11,11 @@ import com.currency.android.presentation.core.navigation.BackHandler
 import com.currency.android.presentation.core.navigation.FlowRouter
 import com.currency.android.presentation.core.navigation.RouterProvider
 import com.currency.android.presentation.core.pm.BasePm
+import com.currency.android.presentation.core.pm.BasePmFragment
 import com.currency.android.presentation.core.pm.widgets.bindTo
 import com.currency.android.presentation.core.ui.progress.ProgressDialog
 import com.currency.android.presentation.core.ui.state_view.StateView
 import com.currency.android.presentation.core.ui.system_ui.StatusBarConfigProvider
-import com.currency.android.presentation.core.ui.utils.showSnackBar
 import me.dmdev.rxpm.bindTo
 
 /**
@@ -57,7 +57,6 @@ abstract class BaseFragment<T : BasePm> : BasePmFragment<T>(), BackHandler {
         emptyStateView?.let { stateView -> pm.emptyControl.bindTo(stateView) }
         progressView?.let { view -> pm.progressState.bindTo(view.visibility()) }
         homeButtonView?.let { view -> view.setOnClickListener { activity?.onBackPressed() } }
-        pm.showSnackBarCommand.bindTo(view.showSnackBar())
     }
 
     override fun providePresentationModel(): T {

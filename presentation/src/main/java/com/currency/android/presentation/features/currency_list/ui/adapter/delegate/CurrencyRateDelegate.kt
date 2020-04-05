@@ -45,7 +45,6 @@ class CurrencyRateDelegate(
                                 } else 0.0
                                 bus.event(Events.OnMultiplierChanged(amount))
                             }
-
                         }
                     }
                 )
