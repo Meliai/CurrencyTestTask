@@ -4,15 +4,15 @@ import com.currency.android.presentation.R
 
 fun String.chooseDrawable(): Int? =
     when (this) {
-        CurrencyEnum.CANADA.code -> R.drawable.ic_cad_flag
-        CurrencyEnum.SWEDEN.code -> R.drawable.ic_swd_flag
-        CurrencyEnum.USA.code -> R.drawable.ic_usa_flag
-        CurrencyEnum.AUSTRALIA.code -> R.drawable.ic_aus_flag
-        CurrencyEnum.POLAND.code -> R.drawable.ic_poland_flag
-        CurrencyEnum.BULGARIA.code -> R.drawable.ic_bulgaria_flag
-        CurrencyEnum.PHILIPPINES.code -> R.drawable.ic_phili_flag
-        CurrencyEnum.EU.code -> R.drawable.ic_eu_flag
-        CurrencyEnum.CROATIA.code -> R.drawable.ic_croatia_flag
+        CurrencyEnum.CANADA.code -> R.drawable.ic_flag_canada
+        CurrencyEnum.SWEDEN.code -> R.drawable.ic_flag_sweden
+        CurrencyEnum.USA.code -> R.drawable.ic_flag_usa
+        CurrencyEnum.AUSTRALIA.code -> R.drawable.ic_flag_australia
+        CurrencyEnum.POLAND.code -> R.drawable.ic_flag_poland
+        CurrencyEnum.BULGARIA.code -> R.drawable.ic_flag_bulgaria
+        CurrencyEnum.PHILIPPINES.code -> R.drawable.ic_flag_philippines
+        CurrencyEnum.EU.code -> R.drawable.ic_flag_eu
+        CurrencyEnum.CROATIA.code -> R.drawable.ic_flag_croatia
         else -> null
     }
 
