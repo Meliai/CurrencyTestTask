@@ -6,7 +6,7 @@ import com.currency.common.mapper.Mapper
 import com.nullgr.core.adapter.items.ListItem
 import javax.inject.Inject
 
-class CurrencyRateListBuilder @Inject constructor() : Mapper<CurrencyModel, ListItem> {
+class CurrencyRateItemMapper @Inject constructor() : Mapper<CurrencyModel, ListItem> {
 
     override fun mapFromObject(source: CurrencyModel): ListItem =
         with(source) {

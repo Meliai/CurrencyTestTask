@@ -15,12 +15,14 @@ import javax.inject.Inject
 
 class CurrencyListPm @Inject constructor(
     private val getLatestCurrencyDataUseCase: GetLatestCurrencyDataUseCase,
-    private val mapper: Mapper<CurrencyModel, ListItem>,
+    private val builder: Mapper<CurrencyModel, ListItem>,
     services: ServiceFacade
 ) : BaseListPm(services) {
 
     private val loadScreenAction = action<Unit>()
     private var currentList: MutableList<CurrencyModel> = ArrayList()
+    private var multiplier = DEFAULT_MULTIPLIER
+    private var currency = DEFAULT_CURRENCY
 
     override fun onCreate() {
         super.onCreate()
@@ -42,10 +44,11 @@ class CurrencyListPm @Inject constructor(
         super.onBind()
         bus.events<Events.OnMultiplierChanged>()
             .doOnNext { event ->
+                multiplier = event.amount
                 currentList.map {
-                    it.multiplier = event.amount
+                    it.multiplier = multiplier
                 }
-                items.consumer.accept(mapper.mapFromObjects(currentList))
+                items.consumer.accept(builder.mapFromObjects(currentList))
             }
             .subscribe()
             .untilUnbind()
@@ -53,21 +56,31 @@ class CurrencyListPm @Inject constructor(
 
     private fun uploadData() =
         getLatestCurrencyDataUseCase.execute(GetLatestCurrencyDataUseCase.Params(DEFAULT_CURRENCY))
-            .doOnNext {
+            .doOnNext { list ->
+                currentList.clear()
                 currentList.add(
                     CurrencyModel(
-                        currency = DEFAULT_CURRENCY,
+                        currency = currency,
+                        multiplier = multiplier,
                         isDefault = true
                     ))
-                currentList.addAll(it)
-                items.consumer.accept(mapper.mapFromObjects(currentList))
+                list.map {
+                    currentList.add(
+                        CurrencyModel(
+                            currency = it.currency,
+                            multiplier = multiplier,
+                            rate = it.rate
+                        ))
+                }
+                items.consumer.accept(builder.mapFromObjects(currentList))
             }
             .observeOn(AndroidSchedulers.mainThread())
             .repeatWhen { it.delay(FREQUENCY, TimeUnit.SECONDS) }
             .hideErrorContainer()
 
-    private companion object {
+    companion object {
         const val DEFAULT_CURRENCY = "EUR"
+        const val DEFAULT_MULTIPLIER = 1.0
         const val FREQUENCY = 1L
     }
 }

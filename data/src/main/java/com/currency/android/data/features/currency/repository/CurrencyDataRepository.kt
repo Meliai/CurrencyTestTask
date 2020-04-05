@@ -14,8 +14,5 @@ class CurrencyDataRepository @Inject constructor(
 ) : CurrencyRepository {
 
     override fun getLatestCurrencyData(baseCurrency: String): Observable<List<CurrencyModel>> =
-        source.getCurrencyData(baseCurrency).map {
-            it.rates[baseCurrency] = 10.0
-            mapper.mapFromObject(it)
-        }
+        source.getCurrencyData(baseCurrency).map(mapper::mapFromObject)
 }
