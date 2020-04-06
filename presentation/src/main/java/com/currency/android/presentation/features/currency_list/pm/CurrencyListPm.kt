@@ -2,7 +2,9 @@ package com.currency.android.presentation.features.currency_list.pm
 
 import com.currency.android.domain.features.currency.interactor.GetLatestCurrencyDataUseCase
 import com.currency.android.domain.features.currency.model.CurrencyModel
+import com.currency.android.presentation.Clicks
 import com.currency.android.presentation.Events
+import com.currency.android.presentation.core.bus.clicks
 import com.currency.android.presentation.core.bus.events
 import com.currency.android.presentation.core.pm.BaseListPm
 import com.currency.android.presentation.core.pm.ServiceFacade
@@ -21,8 +23,10 @@ class CurrencyListPm @Inject constructor(
 
     private val loadScreenAction = action<Unit>()
     private var currentList: MutableList<CurrencyModel> = ArrayList()
-    private var multiplier = DEFAULT_MULTIPLIER
-    private var currency = DEFAULT_CURRENCY
+    private val currentBaseCurrency = CurrencyModel(
+        currency = DEFAULT_CURRENCY,
+        multiplier = DEFAULT_MULTIPLIER
+    )
 
     override fun onCreate() {
         super.onCreate()
@@ -31,6 +35,7 @@ class CurrencyListPm @Inject constructor(
             .flatMap {
                 uploadData()
             }
+            .retry()
             .subscribe()
             .untilDestroy()
 
@@ -42,11 +47,18 @@ class CurrencyListPm @Inject constructor(
 
     override fun onBind() {
         super.onBind()
+        bus.clicks<Clicks.ChangeBaseCurrency>()
+            .doOnNext { click ->
+                // TODO implement change here
+            }
+            .subscribe()
+            .untilUnbind()
+
         bus.events<Events.OnMultiplierChanged>()
             .doOnNext { event ->
-                multiplier = event.amount
+                currentBaseCurrency.multiplier = event.amount
                 currentList.map {
-                    it.multiplier = multiplier
+                    it.multiplier = currentBaseCurrency.multiplier
                 }
                 items.consumer.accept(builder.mapFromObjects(currentList))
             }
@@ -55,20 +67,21 @@ class CurrencyListPm @Inject constructor(
     }
 
     private fun uploadData() =
-        getLatestCurrencyDataUseCase.execute(GetLatestCurrencyDataUseCase.Params(DEFAULT_CURRENCY))
+        getLatestCurrencyDataUseCase.execute(GetLatestCurrencyDataUseCase.Params(currentBaseCurrency.currency))
+            .hideErrorContainer()
             .doOnNext { list ->
                 currentList.clear()
                 currentList.add(
                     CurrencyModel(
-                        currency = currency,
-                        multiplier = multiplier,
+                        currency = currentBaseCurrency.currency,
+                        multiplier = currentBaseCurrency.multiplier,
                         isDefault = true
                     ))
                 list.map {
                     currentList.add(
                         CurrencyModel(
                             currency = it.currency,
-                            multiplier = multiplier,
+                            multiplier = currentBaseCurrency.multiplier,
                             rate = it.rate
                         ))
                 }
@@ -76,7 +89,7 @@ class CurrencyListPm @Inject constructor(
             }
             .observeOn(AndroidSchedulers.mainThread())
             .repeatWhen { it.delay(FREQUENCY, TimeUnit.SECONDS) }
-            .hideErrorContainer()
+            .doOnError(::handleError)
 
     companion object {
         const val DEFAULT_CURRENCY = "EUR"

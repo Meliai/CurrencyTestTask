@@ -42,7 +42,7 @@ abstract class BasePm(
     val errorControl = stateControl()
     val emptyControl = stateControl()
 
-    protected val resources = services.resources
+    val resources = services.resources
     protected val network = services.network
     internal val bus = services.bus
 

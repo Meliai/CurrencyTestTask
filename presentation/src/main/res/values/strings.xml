@@ -4,4 +4,11 @@
     <!--    Rates Screen-->
     <string name="rates_screen_title">Rates</string>
     <string name="hint_rate">0</string>
+
+    <!--NetworkErrors-->
+    <string name="error_network_title">Connection error</string>
+    <string name="error_network_description">Check your network connection</string>
+
+    <string name="error_title">Something went wrong</string>
+    <string name="error_description">Sorry!</string>
 </resources>

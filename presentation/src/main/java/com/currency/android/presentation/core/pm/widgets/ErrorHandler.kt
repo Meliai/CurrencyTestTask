@@ -1,37 +1,22 @@
 package com.currency.android.presentation.core.pm.widgets
 
+import com.currency.android.presentation.ErrorData
 import com.currency.android.presentation.core.pm.BasePm
+import com.currency.common.errors.NetworkConnectionError
 
 class ErrorHandler(private val pm: BasePm) {
 
     fun handleError(error: Throwable) {
-        when (error) {
-//            is UnauthorizedException -> pm.router.newRootScreen(Screens.SCREEN_AUTH_LOGOUT, false)
-//            else -> {
-//                val errorData = when (error) {
-//                    is NetworkConnectionError -> ErrorData.InternetErrorData(pm.resources)
-//                    is ConnectException -> ErrorData.ServerConnectionErrorData(pm.resources)
-//                    is SocketTimeoutException -> ErrorData.ServerConnectionErrorData(pm.resources)
-//                    is ServiceUnavailableError -> ErrorData.ServerConnectionErrorData(pm.resources)
-//                    is HttpException -> ErrorData.ApiError(pm.errorParser.parse(error))
-//                    else -> ErrorData.ServerConnectionErrorData(pm.resources)
-//                }
-//                pm.passToErrorContainer(errorData)
-//                if (pm.isEmptyScreen) {
-//                    if (error is NetworkConnectionError ||
-//                        error is ConnectException ||
-//                        error is SocketTimeoutException ||
-//                        error is ServiceUnavailableError
-//                    ) {
-//                        pm.passToErrorViewVisibility(true)
-//                    } else {
-//                        pm.showSnackBar(SnackBarData.OtherError(errorData.errorDescription))
-//                    }
-//                } else {
-//                    pm.passToErrorViewVisibility(false)
-//                    pm.showSnackBar(SnackBarData.OtherError(errorData.errorDescription))
-//                }
-//            }
+        val errorData = when (error) {
+            is NetworkConnectionError -> ErrorData.NetworkErrorState(pm.resources)
+            else -> ErrorData.ErrorState(pm.resources)
+        }
+
+        pm.setErrorStateData(errorData)
+        if (pm.isEmptyScreen) {
+            pm.setErrorViewVisibility(true)
+        } else {
+            pm.setErrorViewVisibility(false)
         }
     }
 }

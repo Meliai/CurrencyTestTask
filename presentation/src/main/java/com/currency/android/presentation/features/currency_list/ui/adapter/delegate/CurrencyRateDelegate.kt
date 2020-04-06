@@ -2,8 +2,10 @@ package com.currency.android.presentation.features.currency_list.ui.adapter.dele
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.currency.android.presentation.Clicks
 import com.currency.android.presentation.Events
 import com.currency.android.presentation.R
+import com.currency.android.presentation.core.bus.click
 import com.currency.android.presentation.core.bus.event
 import com.currency.android.presentation.features.currency_list.chooseDrawable
 import com.currency.android.presentation.features.currency_list.ui.adapter.item.CurrencyRateListItem
@@ -31,11 +33,6 @@ class CurrencyRateDelegate(
     override fun onCreateViewHolder(parent: ViewGroup): RecyclerView.ViewHolder {
         return super.onCreateViewHolder(parent).apply {
             with(this as ViewHolder) {
-                //                itemView.setOnClickListener {
-//                    withAdapterPosition<CurrencyRateListItem> { _, _, _ ->
-//                        bus.
-//                    }
-//                }
                 itemView.currencyRateText.addTextChangedListener(
                     onTextChanged = { text, _, _, _ ->
                         withAdapterPosition<CurrencyRateListItem> { _, item, _ ->
@@ -48,6 +45,11 @@ class CurrencyRateDelegate(
                         }
                     }
                 )
+                itemView.setOnClickListener {
+                    withAdapterPosition<CurrencyRateListItem> { _, item, _ ->
+                        if (!item.isSelected) bus.click(Clicks.ChangeBaseCurrency(item.currency))
+                    }
+                }
             }
         }
     }
@@ -65,6 +67,7 @@ class CurrencyRateDelegate(
             currencyCodeTextView.text = item.currency
             currencyNameTextView.text = Currency.getInstance(item.currency).displayName.capitalize()
             currencyRateText.updateRateTextView(item.rate, item.multiplier, item.isSelected)
+            currencyRateText.isEnabled = item.isSelected
         }
     }
 
